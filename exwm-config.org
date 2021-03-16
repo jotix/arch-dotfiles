@@ -1,0 +1,197 @@
+#+title: Exwm configuration
+#+PROPERTY: header-args:emacs-lisp :tangle ~/.config/emacs/exwm-config.el :mkdirp yes
+
+* start shell processes
+#+begin_src emacs-lisp
+  (defun jotix/start-shell-processes ()
+    (setq procs
+          '("lxpolkit"
+            "xsetroot -cursor_name left_ptr &"
+            "setxkbmap -layout us -variant altgr-intl"
+            "picom"))
+
+    (mapcar (lambda (command) (start-process-shell-command command nil command)) procs))
+#+end_src
+* randr-init
+#+begin_src emacs-lisp
+  (defun jotix/randr-init ()  
+
+    (require 'exwm-randr)
+    (setq exwm-randr-workspace-output-plist '(0 "HDMI-A-0" 1 "DVI-D-0" 2 "DisplayPort-0"))
+
+    (setq jotix-video-output-enable-alist
+          '((HDMI-A-0 . t)
+            (DVI-D-0  . t) 
+            (DisplayPort-0 . nil)))
+
+    (setq jotix-video-output-alist
+          '((HDMI-A-0 . "--mode 2560x1080 --rotate normal")
+            (DVI-D-0 . "--mode 1680x1050 --left-of HDMI-A-0 --rotate normal")
+            (DisplayPort-0 . "--mode 1920x1080 --above HDMI-1 --rotate normal")))
+
+    (jotix/execute-xrandr)
+    (exwm-randr-enable))
+
+  (defun jotix/on-off-randr-output (port)
+    (interactive)
+    (setcdr (assq port jotix-video-output-enable-alist) (not (alist-get port jotix-video-output-enable-alist)))
+    (jotix/execute-xrandr))
+
+  (defun jotix/execute-xrandr ()
+    (start-process-shell-command "xrandr" nil (concat "xrandr " (jotix/make-xrandr-string))))
+
+  (defun jotix/make-xrandr-string ()
+    (interactive)
+    (mapconcat
+     (lambda (element)
+       (let ((key (car element)) (value (cdr element)))
+         (if (alist-get key jotix-video-output-enable-alist)
+             (concat "--output " (format "%s " key) (format "%s " value))
+           (concat "--output " (format "%s " key) "--off"))))
+     jotix-video-output-alist " "))
+#+end_src
+* volume control
+#+begin_src emacs-lisp
+  (use-package pulseaudio-control
+    :bind
+    ("<XF86AudioLowerVolume>" . pulseaudio-control-decrease-volume)
+    ("<XF86AudioRaiseVolume>" . pulseaudio-control-increase-volume)
+    ("<XF86AudioMute>" . pulseaudio-control-toggle-current-sink-mute)
+    :custom (pulseaudio-control-volume-step "5%"))
+
+  ;; FreeBSD volume control
+  ;; (defun jotix/audio-adjust-volume (string)
+  ;;   (interactive)
+  ;;   (start-process-shell-command "mixer" nil (concat "mixer vol " (format "%s" string)))
+  ;;   (message "ajustando volumen"))
+#+end_src
+* global keybindings
+#+begin_src emacs-lisp
+(defvar jotix--exwm-input-global-keys
+        `(
+          ;; Reset (to line-mode).
+          (,(kbd "C-s-r") . exwm-reset)
+          ;; Switch workspace.
+          (,(kbd "C-s-w") . exwm-workspace-switch)
+          ;; Launch application.
+          (,(kbd "s-p") . (lambda (command)
+                            (interactive (list (read-shell-command "$ ")))
+                            (start-process-shell-command command nil command)))
+
+          ;; my keybindings
+          (,(kbd "s-,") . (lambda () (interactive) (exwm-layout-shrink-window-horizontally 20)))
+          (,(kbd "s-.") . (lambda () (interactive) (exwm-layout-enlarge-window-horizontally 20)))
+          (,(kbd "s-c") . exwm-input-release-keyboard)
+
+          ;; FreeBSD volume control
+          ;; (,(kbd "s-<up>") . (lambda () (interactive) (jotix/audio-adjust-volume "+10")))
+          ;;(,(kbd "s-<down>") . (lambda () (interactive) (jotix/audio-adjust-volume "-10")))
+
+          ;; xrandr
+          (,(kbd "s-<f1>") . (lambda () (interactive) (jotix/on-off-randr-output 'HDMI-1)))
+          (,(kbd "s-<f2>") . (lambda () (interactive) (jotix/on-off-randr-output 'DVI-D-1)))
+          (,(kbd "s-<f3>") . (lambda () (interactive) (jotix/on-off-randr-output 'DP-1)))
+
+          ;; workspaces
+          (,(kbd "s-q") . (lambda () (interactive) (exwm-workspace-switch-create 0)))
+          (,(kbd "s-w") . (lambda () (interactive) (exwm-workspace-switch-create 1)))
+          (,(kbd "s-e") . (lambda () (interactive) (exwm-workspace-switch-create 2)))
+          (,(kbd "s-r") . (lambda () (interactive) (exwm-workspace-switch-create 3)))
+          (,(kbd "s-Q") . (lambda () (interactive) (exwm-workspace-move-window 0)))
+          (,(kbd "s-W") . (lambda () (interactive) (exwm-workspace-move-window 1)))
+          (,(kbd "s-E") . (lambda () (interactive) (exwm-workspace-move-window 2)))
+          (,(kbd "s-R") . (lambda () (interactive) (exwm-workspace-move-window 3)))))
+
+#+end_src
+* simulation keys 
+#+begin_src emacs-lisp
+    (defvar jotix--exwm-input-simulation-keys
+          '(([?\C-b] . [left])
+            ([?\C-f] . [right])
+            ([?\C-p] . [up])
+            ([?\C-n] . [down])
+            ([?\C-a] . [home])
+            ([?\C-e] . [end])
+            ([?\M-v] . [prior])
+            ([?\C-v] . [next])
+            ([?\C-d] . [delete])
+            ([?\C-k] . [S-end delete])
+            ([?\C-w] . [C-x])
+            ([?\M-w] . [C-c])
+            ([?\C-y] . [C-v])))
+#+end_src
+* pass through keys
+#+begin_src emacs-lisp
+    ;; these keys allways should pass through to Emacs
+    (defvar jotix--exwm-input-prefix-keys
+          '(?\C-x
+            ?\C-c
+            ?\C-u
+            ?\C-h
+            ?\M-x
+            ?\s-b
+            ?\s-d
+            \s-return
+            \s-backspace
+            \s-up
+            \s-down
+            \XF86AudioLowerVolume
+            \XF86AudioRaiseVolume
+            \XF86AudioMute))
+#+end_src
+* specific windows configs
+#+begin_src emacs-lisp
+(defvar jotix--exwm-manage-configurations
+          '(((string-match-p "^ ?Android Emulator -" exwm-title) floating t)
+            ((string-match-p "Volume Control" exwm-title) floating t)
+            ((string-match-p "wow.exe" exwm-title) workspace 3)))
+#+end_src
+* exwm config
+#+begin_src emacs-lisp
+  (use-package exwm
+    :init (jotix/start-shell-processes)
+
+    :custom
+    ;; Set the initial workspace number.
+    (exwm-workspace-number 4)
+    ;; show buffers on other workspace
+    (exwm-workspace-show-all-buffers t)
+    ;; and allow switching to buffers on other workspaces
+    (exwm-layout-show-all-buffers t)
+    ;; global keybindings
+    (exwm-input-global-keys jotix--exwm-input-global-keys)
+    ;; simulation keys
+    (exwm-input-simulation-keys jotix--exwm-input-simulation-keys)
+    ;; these keys allways should pass through to Emacs
+    (exwm-input-prefix-keys jotix--exwm-input-prefix-keys)
+    ;; specific windows configurations
+    (exwm-manage-configurations jotix--exwm-manage-configurations)
+
+    :hook  
+    ;; Make class name the buffer name
+    (exwm-update-class . (lambda () (exwm-workspace-rename-buffer exwm-class-name)))
+    ;; rename qutebrowser buffers
+    (exwm-update-title-hook . (lambda () (when (or (not exwm-instance-name) (string= "qutebrowser" exwm-instance-name))
+                                      (exwm-workspace-rename-buffer exwm-title))))
+
+    :config
+    (if (string= system-name "jtx-pc-arch")
+        (jotix/randr-init))
+    ;; systemtray
+    (require 'exwm-systemtray)
+    (exwm-systemtray-enable)
+    ;; Ctrl+Q send the next key directly
+    (define-key exwm-mode-map (kbd "C-q") 'exwm-input-send-next-key))
+  (exwm-enable)
+#+end_src
+
+* exwm desktop file
+#+begin_src shell :tangle "/sudo::/usr/share/xsessions/exwm.desktop" :mkdirp yes
+  [Desktop Entry]
+  Name=EXWM
+  Comment=Emacs Window Manager
+  Exec=emacs --debug-init -mm -l ~/.config/emacs/exwm-config.el
+  Type=Application
+  X-LightDM-DesktopName=exwm
+  DesktopNames=exwm
+#+end_src

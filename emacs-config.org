@@ -1,0 +1,485 @@
+#+title: Emacs configuration
+#+PROPERTY: header-args:emacs-lisp :tangle ~/.config/emacs/init.el :mkdirp yes
+
+* note
+#+begin_src emacs-lisp
+  ;; NOTE: init.el is generated from emacs-config.org. Please edit that file
+  ;;       in Emacs and execute org-babel=tangle for generate init.el
+#+end_src
+* constants
+#+begin_src emacs-lisp
+(defvar jotix/default-font-size 100)
+;; FreeBSD shell
+;;(defvar my-term-shell "/bin/csh")
+#+end_src
+* garbage collection
+#+begin_src emacs-lisp
+  (setq gc-cons-threshold (* 50 1000 1000))
+#+end_src
+* packages
+** initialize packages sources
+#+begin_src emacs-lisp
+  (require 'package)
+
+  (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                           ("org" . "https://orgmode.org/elpa/")
+                           ("elpa" . "https://elpa.gnu.org/packages/")))
+
+  (package-initialize)
+  (unless package-archive-contents
+    (package-refresh-contents))
+#+end_src
+** use-package
+#+begin_src emacs-lisp
+  ;; bootstraping use-package
+  (unless (package-installed-p 'use-package)
+    (package-install 'use-package))
+
+  (require 'use-package)
+  (setq use-package-always-ensure t)
+  (setq use-package-always-defer t)
+#+end_src
+** spacemacs-theme
+   #+begin_src emacs-lisp
+   (use-package spacemacs-theme
+     :init (load-theme 'spacemacs-dark t))
+   #+end_src
+** sudo-edit
+#+begin_src emacs-lisp
+  (use-package sudo-edit
+    :bind ("s-e" . sudo-edit))
+#+end_src
+** symon
+#+begin_src emacs-lisp
+  (use-package symon
+    :bind ("s-s" . symon-mode))
+#+end_src
+** wich-key
+#+begin_src emacs-lisp
+  (use-package which-key
+    :custom (wich-key-idle-delay 0.3)
+    :init (which-key-mode 1))
+#+end_src
+** avy
+#+begin_src emacs-lisp
+  (use-package avy
+    :bind ("M-s" . avy-goto-char))
+#+end_src
+** beacon
+#+begin_src emacs-lisp
+  (use-package beacon
+    :init (beacon-mode 1))
+#+end_src
+** rainbow-delimiters
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+    :hook (prog-mode . rainbow-delimiters-mode))
+#+end_src
+** pdf-tools
+#+begin_src emacs-lisp
+  (use-package pdf-tools)
+#+end_src
+** hungry-delete
+#+begin_src emacs-lisp
+  (use-package hungry-delete
+    :init (global-hungry-delete-mode t))
+#+end_src
+** witch-window
+#+begin_src emacs-lisp
+(use-package switch-window
+  :bind
+  ([remap other-window] . switch-window)
+  :custom
+  (switch-window-input-style 'minibuffer)
+  (switch-window-increase 4)
+  (switch-window-threshold 2)
+  (switch-window-shortcut-style 'qwerty)
+  (switch-window-qwerty-shortcuts
+  '("q" "w" "e" "r" "t" "y")))
+#+end_src.
+** haskell mode
+#+begin_src emacs-lisp
+  ;;(use-package haskell-mode)
+#+end_src
+** company - auto completion
+#+begin_src emacs-lisp
+  (use-package company
+    :hook (after-init . global-company-mode))
+#+end_src
+** magit
+#+begin_src emacs-lisp
+  (use-package magit
+    :commands magit-status)
+#+end_src
+** elfeed - RSS reader
+#+begin_src emacs-lisp
+  (use-package elfeed
+    :commands elfeed
+    :bind ( "C-c w" . 'elfeed)
+    :custom
+    (elfeed-feeds '("https://www.telam.com.ar/rss2/"
+                    "https://www.clarin.com/rss/lo-ultimo/"
+                    "http://contenidos.lanacion.com.ar/herramientas/rss/origen=2"
+                    "http://contenidos.lanacion.com.ar/herramientas/rss/categoria_id=504")))
+#+end_src
+** password-store
+#+begin_src emacs-lisp
+  ;; password-store.el client compatible with pass
+  (use-package password-store
+    :bind
+    ("C-c p" . password-store-copy)
+    ("C-c P" . password-store-copy-field)
+    :config
+    (require 'auth-source-pass)
+    (auth-source-pass-enable))
+
+  ;; major mode for password-store.el
+  (use-package pass
+    :commands pass)
+#+end_src
+** pinentry
+#+begin_src emacs-lisp
+  (use-package pinentry
+    :init
+    (setenv "INSIDE_EMACS" "YES")
+    (pinentry-start))
+#+end_src
+** dashboard
+#+begin_src emacs-lisp
+  (use-package dashboard
+    :defer nil
+    :hook (exwm-init . dashboard-refresh-buffer)
+    :config (dashboard-setup-startup-hook))
+#+end_src
+* auto-tangle configuration files
+#+begin_src emacs-lisp
+(with-eval-after-load 'org
+  ;; Automatically tangle any .org in ~/workspace-git/dotfiles file when we save it
+  (defun jotix/org-babel-tangle-config ()
+    (when (string-equal (file-name-directory (buffer-file-name))
+                        (expand-file-name "~/workspace-git/dotfiles/"))
+      ;; Dynamic scoping to the rescue
+      (let ((org-confirm-babel-evaluate nil))
+        (org-babel-tangle))))
+
+  (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'jotix/org-babel-tangle-config))))
+#+end_src
+* appareance / editor settings
+#+begin_src emacs-lisp
+
+  ;; font
+  (set-face-attribute 'default nil :font "Source Code Pro" :height jotix/default-font-size)
+
+  ;;(add-to-list 'default-frame-alist '(font . "Source Code Pro-10"))
+
+  ;; start maximized
+  ;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+  ;; show lines and columns on modeline
+  (line-number-mode 1)
+  (column-number-mode 1)
+
+  ;; disable backup files
+  ;;(setq make-backup-files nil)
+
+  ;; backup in one place. flat, no tree structure
+  (setq backup-directory-alist '(("" . "~/.emacs_backup")))
+
+  (setq auto-save-default nil)
+
+  ;; disable menu, bar, scroll bar & startup message
+
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+  (setq inhibit-startup-message t)
+
+  ;; scroll
+  (setq scroll-conservatively 100)
+
+  ;; hl-line
+  (when window-system (global-hl-line-mode t))
+
+  ;; pretty symbols
+  (global-prettify-symbols-mode t)
+
+  ;; y or n
+  (defalias 'yes-or-no-p 'y-or-n-p)
+
+  ;; disable ring
+  (setq ring-bell-function 'ignore)
+
+  ;; subword
+  (global-subword-mode 1)
+
+  ;; auto pairs
+  (electric-pair-mode 1)
+
+  ;; parenthesis matches
+  (show-paren-mode 1)
+#+end_src
+** copy/delete whole line
+#+begin_src emacs-lisp
+  (defun copy-whole-line ()
+    (interactive)
+    (save-excursion
+      (kill-new
+       (buffer-substring
+        (point-at-bol)
+        (point-at-eol)))))
+
+  (global-set-key (kbd "C-c l") 'copy-whole-line)
+(global-set-key (kbd "M-<delete>") 'kill-whole-line)
+#+end_src
+
+** line/column numbers
+#+begin_src emacs-lisp
+  (column-number-mode)
+
+  (add-hook 'prog-mode-hook (display-line-numbers-mode 1))
+#+end_src
+* modeline
+#+begin_src emacs-lisp
+  ;; (use-package spaceline
+  ;;   :config
+  ;;   (require 'spaceline-config)
+  ;;   (setq powerline-default-separator (quote wave))
+  ;;   (spaceline-spacemacs-theme))
+
+  (use-package doom-modeline
+    :init (doom-modeline-mode 1)
+    :custom ((doom-modeline-height 15)))
+
+  ;; clock
+  (setq display-time-day-and-date t)
+  (setq display-time-24hr-format t)
+  (display-time-mode t)
+
+  ;; battery
+  (if (string= system-name "jtx.ntbk.bsd")
+      (display-battery-mode))
+#+end_src
+* dired
+** open in the same buffer with 'a'
+#+begin_src emacs-lisp
+  (put 'dired-find-alternate-file 'disabled nil)
+#+end_src
+* transparency
+#+begin_src emacs-lisp
+  (set-frame-parameter (selected-frame) 'alpha '(100 100))
+  (add-to-list 'default-frame-alist '(alpha 100 100))
+
+  (defun toggle-transparency ()
+    (interactive)
+    (let ((alpha (frame-parameter nil 'alpha)))
+      (set-frame-parameter
+       nil 'alpha
+       (if (eql (cond ((numberp alpha) alpha)
+                      ((numberp (cdr alpha)) (cdr alpha))
+                      ;; Also handle undocumented (<active> <inactive>) form.
+                      ((numberp (cadr alpha)) (cadr alpha)))
+                100)
+           '(85 . 50) '(100 . 100)))))
+  (global-set-key (kbd "C-c t") 'toggle-transparency)
+#+end_src
+* org
+** basic config
+#+begin_src emacs-lisp
+  (use-package org
+    :hook (org-mode . (lambda () (org-indent-mode 1)))
+    :config
+    ;; mensaje para debug del init de org
+    (message "ORG loaded")
+
+    ;; editar codigo en la misma ventana
+    (setq org-src-window-setup 'current-window)
+
+    ;; org start with org-indent-mode active
+    (setq org-startup-indentation 1)
+
+    ;; the effect of TAB in a code block is as if it were
+    ;; issued in the language major mode buffer. 
+    (setq org-src-tab-acts-natively t)
+
+    ;; This should be the number of spaces added to the indentation of the #+begin
+    ;; line in order to compute the indentation of the block content after
+    ;; editing it with ‘M-x org-edit-src-code’.
+    (setq org-edit-src-content-indentation 2)
+
+    ;; support shift select
+    (setq org-support-shift-select 1))
+#+end_src
+** org-tempo
+#+begin_src emacs-lisp
+  (with-eval-after-load 'org
+    ;; type <X + TAB to generate text blocks
+    (require 'org-tempo)
+    ;; custom templates
+    (add-to-list 'org-structure-template-alist
+                 '("el" . "src emacs-lisp")
+                 '("hs" . "src haskell")))
+#+end_src
+** org-bullets
+#+begin_src emacs-lisp
+  (use-package org-bullets
+    :after org
+    :hook (org-mode . org-bullets-mode))
+#+end_src
+** org-tree-slide
+#+begin_src emacs-lisp
+  (use-package org-tree-slide
+    :after org
+    :custom (org-image-actual-width nil))
+#+end_src
+* buffers
+** ibuffer
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-x C-b") 'ibuffer)
+  (global-set-key (kbd "s-B") 'ibuffer)
+
+  ;; expert
+  (setq ibuffer-expert t)
+#+end_src
+** allways kill current buffer
+#+begin_src emacs-lisp
+  (defun kill-current-buffer ()
+    (interactive)
+    (kill-buffer (current-buffer)))
+  (global-set-key (kbd "C-x k") 'kill-current-buffer)
+#+end_src
+** kill all buffers
+#+begin_src emacs-lisp
+  (defun kill-all-buffers ()
+    (interactive)
+    (mapc 'kill-buffer (buffer-list)))
+  (global-set-key (kbd "C-s-k") 'kill-all-buffers)
+#+end_src
+** switch to the last buffer
+#+begin_src emacs-lisp
+  (global-set-key (kbd "s-<backspace>") '(lambda () (interactive) (switch-to-buffer (other-buffer))))
+#+end_src
+* config edit
+#+begin_src emacs-lisp
+  (defun jotix/config-visit ()
+    (interactive)
+    (find-file "~/workspace-git/dotfiles/emacs-config.org"))
+
+  (defun jotix/dotfiles-visit ()
+    (interactive)
+    (find-file "~/workspace-git/dotfiles/dotfiles.org"))
+
+  (global-set-key (kbd "C-c e") 'jotix/config-visit)
+  (global-set-key (kbd "C-c E") 'jotix/dotfiles-visit)
+#+end_src
+* window splitting function
+#+begin_src emacs-lisp
+  (defun split-and-follow-horizontally ()
+    (interactive)
+    (split-window-below)
+    (balance-windows)
+    (other-window 1))
+  (global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
+
+  (defun split-and-follow-vertically ()
+    (interactive)
+    (split-window-right)
+    (balance-windows)
+    (other-window 1))
+  (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
+#+end_src
+* eshell
+#+begin_src emacs-lisp
+  (use-package eshell
+    :hook (eshell-mode . eshell-read-aliases-list)
+    :bind ("s-<return>" . eshell)
+    :config
+    ;; git prompt
+    (use-package eshell-git-prompt
+      :init (eshell-git-prompt-use-theme 'git-radar)))
+#+end_src
+** aliases
+#+begin_src shell :tangle ~/.config/emacs/eshell/alias :mkdirp yes
+  ### NOTE: this file is generated from emacs-config.org. Please edit that file
+  ### in Emacs and execute org-babel-tangle for generate it
+
+  #alias config git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME $*
+  alias ll ls -lha $*
+  alias lh ls -lh $*
+#+end_src
+* ansi-term
+#+begin_src emacs-lisp
+  (defvar my-term-shell "/bin/bash")
+  (defadvice ansi-term (before force-bash)
+    (interactive (list my-term-shell)))
+  (ad-activate 'ansi-term)
+
+  (global-set-key (kbd "S-s-<return>") 'ansi-term)
+#+end_src
+* ivy
+#+begin_src emacs-lisp
+    (use-package counsel
+      :custom
+      (ivy-use-virtual-buffers t)
+      (enable-recursive-minibuffers t)
+      :config
+      (ivy-mode 1)
+      :bind
+      ("C-s" . swiper-isearch)
+      ("M-x" . counsel-M-x)
+      ("C-x C-f" . counsel-find-file)
+      ("M-y" . counsel-yank-pop)
+      ("<f1> f" . counsel-describe-function)
+      ("<f1> v" . counsel-describe-variable)
+      ("<f1> l" . counsel-find-library)
+      ("<f2> i" . counsel-info-lookup-symbol)
+      ("<f2> u" . counsel-unicode-char)
+      ("<f2> j" . counsel-set-variable)
+      ("C-x b" . ivy-switch-buffer)
+      ("s-b" . ivy-switch-buffer)
+      ("C-c v" . ivy-push-view)
+      ("C-c V" . ivy-pop-view)
+      ("s-d". counsel-linux-app))
+#+end_src
+** counsel-spotify
+#+begin_src emacs-lisp
+(use-package counsel-spotify
+  :after counsel
+  :custom
+    (counsel-spotify-client-id "1b8c6680d3b245f088e8d7ee0f33c144")
+    (counsel-spotify-client-secret "d6f382dc31e246a18546e892f2e5959c")
+    (counsel-spotify-use-system-bus-p nil)
+    (counsel-spotify-service-name "spotifyd"))
+#+end_src
+* custom functions
+** extract links
+#+begin_src emacs-lisp
+  (defun jotix/extract-links ()
+    (interactive)
+    (beginning-of-buffer)
+    (replace-regexp "^.*<a href=\"\\([^\"]+\\)\"[^>]+>\\([^<]+\\)</a>.*$" "LINK:\\1|\\2")
+    (beginning-of-buffer)
+    (replace-regexp "^\\([^L]\\|\\(L[^I]\\)\\|\\(LI[^N]\\)\\|\\(LIN[^K]\\)\\).*$" "")
+    (beginning-of-buffer)
+    (replace-regexp "+" "")
+    (beginning-of-buffer)
+    (replace-regexp "^LINK:\\(.*\\)$" "\\1"))
+#+end_src
+** search & kill to EOL
+#+begin_src emacs-lisp
+  (defun jotix/kill-trash ()
+    (interactive) 
+    (search-forward "|")
+    (kill-line)
+    (delete-backward-char 1))
+#+end_src
+** browser behavior
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-c q q") '(lambda () (interactive) (start-process-shell-command "qutebrowser" nil "qutebrowser")))
+  (global-set-key (kbd "C-c q g") '(lambda () (interactive) (start-process-shell-command "qutebrowser" nil "qutebrowser www.google.com")))
+  (global-set-key (kbd "C-c q s") '(lambda (search)
+                                     (interactive (list (read-shell-command "web/search: ")))
+                                     (start-process-shell-command "qutebrowser" nil (concat "qutebrowser '" search "'"))))
+
+  (setq browse-url-browser-function 'eww-browse-url)
+#+end_src
+

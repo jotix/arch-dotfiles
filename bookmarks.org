@@ -1,0 +1,199 @@
+* google
+** gmail
+https://mail.google.com
+** youtube
+https://youtube.com/
+** youtube Music
+https://music.youtube.com/
+** youtube studio
+https://studio.youtube.com/channel/UCtqN1QeO24MkH7HlYdtbyew
+** maps
+https://maps.google.com/
+** news
+https://news.google.com/
+** traductor
+https://translate.google.com/
+** drive
+https://drive.google.com/drive/
+** photos
+https://photos.google.com/u/0/
+** flights
+https://www.google.com/flights/#flt=/m/01ly5m..2018-04-17*./m/01ly5m.2018-04-21;c:ARS;e:1;sd:1;t:h
+** my business
+https://business.google.com/u/1/locations
+** google play console
+https://play.google.com/apps/publish/?account=4824768071329009352#
+** keep
+https://keep.google.com/u/0/
+** calendar
+https://calendar.google.com/calendar/r
+** fonts
+https://fonts.google.com/
+* jotix
+** prenola online
+https://prenotaonline.esteri.it/
+** lbry
+https://lbry.tv/
+** wow
+*** mmo-champion
+http://www.mmo-champion.com/content/
+*** classic wowhead
+https://classic.wowhead.com/
+*** curse
+https://www.curseforge.com/wow/addons
+*** blizzard
+https://www.blizzard.com/
+*** wow
+https://worldofwarcraft.com/en-us/
+*** wow forums
+https://us.forums.blizzard.com/en/wow/
+*** wowhead
+https://www.wowhead.com/
+** odysee
+https://odysee.com/
+** duckduckgo
+https://duckduckgo.com/
+** mercadopago
+https://www.mercadopago.com.ar/home
+** mercadolibre
+http://www.mercadolibre.com.ar/
+** loteria de la iudad
+https://www.loteriadelaciudad.gob.ar/site/
+** movistar
+http://www.movistar.com.ar/
+** twitch
+https://www.twitch.tv/
+** twitter
+https://twitter.com/
+** whatsup web
+https://web.whatsapp.com/
+** netflix
+https://www.netflix.com/browse
+** imgur
+https://imgur.com/
+** spotify
+https://open.spotify.com
+** facebook
+https://www.facebook.com/
+* homebanking
+** bapro
+https://www.bancoprovincia.bancainternet.com.ar/eBanking/login/inicio.htm
+** santanderrio
+https://www.santanderrio.com.ar/banco/online/personas
+** prisma medios de pago
+https://establecimientos.prismamediosdepago.com/establecimientos/login
+** autogestion municipalidad 
+https://autogestion.msm.gov.ar/inicio
+** federacion patronal
+https://self2.fedpat.com.ar/Asegurados/pages/main.jsf
+** arba
+http://www.arba.gov.ar/
+** afip
+*** monotributo
+https://monotributo.afip.gob.ar/app/Inicio.aspx
+*** login
+https://auth.afip.gob.ar/contribuyente_/login.xhtml
+*** constancia inscripcion
+https://seti.afip.gob.ar/padron-puc-constancia-internet/ConsultaConstanciaAction.do
+* keyboard
+** aliexpress
+*** npkc
+https://www.aliexpress.com/store/3558035?spm=2114.10010108.0.0.4081747faH1dSv
+*** kpreplubic
+https://kprepublic.aliexpress.com/store/3034003?spm=2114.search0104.3.5.TbQnG0
+*** kdbfans
+https://kbdfans.aliexpress.com/store/2230037?spm=2114.12010608.0.0.74401c5fW0YlaM
+*** idobao
+https://www.aliexpress.com/store/5072109?spm=2114.12010612.pcShopHead_1000002633020.0
+*** cool jazz
+https://cooljazz.aliexpress.com/store/1806079?spm=2114.12010612.0.0.64043814SY1QpD
+*** ymkd
+https://ymdk.aliexpress.com/store/429151?spm=2114.10010108.0.0.8S5GUQ
+** the kayboard company
+http://www.keyboardco.com/
+** compra gamer
+https://compragamer.com/index.php?seccion=3&cate=39&nro_max=50
+** bangood
+https://www.banggood.com/Wholesale-Mechanical-Gaming-Keyboard-c-2189.html?akmClientCountry=AR
+** kdbfans
+https://kbdfans.myshopify.com/
+** kpreplubic
+https://kprepublic.com/
+** mechanicalkeyboards
+https://mechanicalkeyboards.com/
+** massdrop
+https://www.massdrop.com/mechanical-keyboards/drops/newest
+** pimpmykayboard
+http://pimpmykeyboard.com/
+** geekhack
+http://geekhack.org/
+** deskthority
+https://deskthority.net/
+** r/olkb
+https://www.reddit.com/r/olkb/
+** r/mechanicalkeyboars
+http://www.reddit.com/r/MechanicalKeyboards/
+** qmk
+https://qmk.fm/
+** olkb
+https://olkb.com/
+** keyboard tester
+http://www.keyboardtester.com/tester.html
+** keyboard layout editor
+http://www.keyboard-layout-editor.com/
+** corre argentino envios internacionales
+https://epago.correoargentino.com.ar/#/home
+** custom keyboards
+*** handwired preonic
+http://www.billybuerger.com/pages/20170501/PreonicKeyboard/
+*** opensource mechan ical keyboards
+https://github.com/help-14/mechanical-keyboard
+*** atreis
+https://github.com/dekonnection/atreis
+** epomaker
+https://epomaker.com/
+** uk keycaps
+http://www.ukkeycaps.co.uk/
+** internatinal package tracking
+https://www.17track.net/en
+** ymdk ebay
+https://www.ebay.com/str/ymdkeyboard
+* travel 
+** embajada eeuu en argentina
+https://ar.usembassy.gov/es/
+* development
+** haskell
+*** learn haskell
+https://github.com/bitemyapp/learnhaskell
+** repositories
+*** my github
+https://github.com/jotix?tab=repositories
+*** powerline fonts
+https://github.com/powerline/fonts
+*** pureline
+https://github.com/chris-marsh/pureline
+*** qmk firmware
+https://github.com/qmk/qmk_firmware
+* news
+** bbc
+http://news.bbc.co.uk/go/rss/-/2/hi/default.stm
+* free stuff
+** free photos pexels
+https://www.pexels.com/
+** unsplash free images
+https://unsplash.com/
+** pixabay
+https://pixabay.com/images/search/bank/
+** gratisography
+https://gratisography.com/
+** texfiles
+http://artscene.textfiles.com/
+** barcode lookup
+https://www.barcodelookup.com/
+* ungs
+** ungs
+https://www.ungs.edu.ar/
+** guarani 
+https://inscripciones.ungs.edu.ar/g315w3/inicio_alumno
+** moodle
+http://virtual.grado.ungs.edu.ar/moodle/
