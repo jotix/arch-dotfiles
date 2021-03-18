@@ -184,6 +184,10 @@ ar systemctl enable ntpdate
 ### trim
 ar systemctl enable fstrim.timer
 
+### create user
+ar useradd -m -G wheel -s /bin/bash $USER_NAME
+printf "$USER_PASSWORD\n$USER_PASSWORD\n" | ar passwd $USER_NAME  
+
 ### display manager
 [[ "$ENABLE_GDM" == "y" ]] && ar systemctl enable gdm
 
@@ -201,8 +205,3 @@ echo "$ARDUINO_RULES" > /mnt/etc/udev/rules.d/51-arduino-pro-micro.rules
 
 ### sudo
 echo -e "\n\n%wheel ALL=(ALL) ALL" >> /mnt/etc/sudoers
-
-### create user
-ar useradd -m -G wheel -s /bin/bash $USER_NAME
-printf "$USER_PASSWORD\n$USER_PASSWORD\n" | ar passwd $USER_NAME  
-
