@@ -157,10 +157,10 @@
   ;; Automatically tangle any .org in ~/workspace-git/dotfiles file when we save it
   (defun jotix/org-babel-tangle-config ()
     (when (string-equal (file-name-directory (buffer-file-name))
-                        (expand-file-name "~/workspace-git/dotfiles/"))
+                        (expand-file-name "~/workspace-git/arch-dotfiles/"))
       ;; Dynamic scoping to the rescue
       (let ((org-confirm-babel-evaluate nil))
-        (org-babel-tangle))))
+        (org-babel-tangle)))) 
 
   (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'jotix/org-babel-tangle-config))))
 #+end_src
@@ -362,11 +362,11 @@
 #+begin_src emacs-lisp
   (defun jotix/config-visit ()
     (interactive)
-    (find-file "~/workspace-git/dotfiles/emacs-config.org"))
+    (find-file "~/workspace-git/arch-dotfiles/emacs-config.org"))
 
   (defun jotix/dotfiles-visit ()
     (interactive)
-    (find-file "~/workspace-git/dotfiles/dotfiles.org"))
+    (find-file "~/workspace-git/arch-dotfiles/dotfiles.org"))
 
   (global-set-key (kbd "C-c e") 'jotix/config-visit)
   (global-set-key (kbd "C-c E") 'jotix/dotfiles-visit)

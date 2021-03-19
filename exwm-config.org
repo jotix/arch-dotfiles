@@ -175,7 +175,7 @@
                                       (exwm-workspace-rename-buffer exwm-title))))
 
     :config
-    (if (string= system-name "jtx-pc-arch")
+    (if (string= system-name "jtx-arch")
         (jotix/randr-init))
     ;; systemtray
     (require 'exwm-systemtray)
