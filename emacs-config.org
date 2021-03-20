@@ -153,16 +153,16 @@
 #+end_src
 * auto-tangle configuration files
 #+begin_src emacs-lisp
-(with-eval-after-load 'org
-  ;; Automatically tangle any .org in ~/workspace-git/dotfiles file when we save it
+
+  ;; Automatically tangle any .org in ~/workspace-git/arch-dotfiles file when we save it
   (defun jotix/org-babel-tangle-config ()
     (when (string-equal (file-name-directory (buffer-file-name))
                         (expand-file-name "~/workspace-git/arch-dotfiles/"))
       ;; Dynamic scoping to the rescue
       (let ((org-confirm-babel-evaluate nil))
-        (org-babel-tangle)))) 
+        (org-babel-tangle))))
 
-  (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'jotix/org-babel-tangle-config))))
+  (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'jotix/org-babel-tangle-config)))
 #+end_src
 * appareance / editor settings
 #+begin_src emacs-lisp
