@@ -9,9 +9,9 @@
                                        "setxkbmap -layout us -variant altgr-intl"))
   
     (setq procs
-          '("lxpolkit"
+          `("lxpolkit"
             "xsetroot -cursor_name left_ptr &"
-            jotix--set-keyboard-layout
+            ,jotix--set-keyboard-layout
             "picom"))
 
     (mapcar (lambda (command) (start-process-shell-command command nil command)) procs))
@@ -153,8 +153,9 @@
 * exwm config
 #+begin_src emacs-lisp
   (use-package exwm
-    :init (jotix/start-shell-processes)
-
+    :init
+    (jotix/start-shell-processes)
+  
     :custom
     ;; Set the initial workspace number.
     (exwm-workspace-number 4)
@@ -176,19 +177,22 @@
     (exwm-update-class . (lambda () (exwm-workspace-rename-buffer exwm-class-name)))
     ;; rename qutebrowser buffers
     (exwm-update-title-hook . (lambda () (when (or (not exwm-instance-name) (string= "qutebrowser" exwm-instance-name))
-                                      (exwm-workspace-rename-buffer exwm-title))))
+				      (exwm-workspace-rename-buffer exwm-title))))
 
-    :config
+    :config    
     (if (string= system-name "jtx-arch")
-        (jotix/randr-init))
+	(jotix/randr-init))
+
     ;; systemtray
     (require 'exwm-systemtray)
     (exwm-systemtray-enable)
+
     ;; Ctrl+Q send the next key directly
     (define-key exwm-mode-map (kbd "C-q") 'exwm-input-send-next-key))
-  (exwm-enable)
-#+end_src
 
+  (exwm-enable)
+
+#+end_src
 * exwm desktop file
 #+begin_src shell :tangle "/sudo::/usr/share/xsessions/exwm.desktop" :mkdirp yes
   [Desktop Entry]
