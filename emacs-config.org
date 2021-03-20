@@ -307,17 +307,21 @@
     (setq org-edit-src-content-indentation 2)
 
     ;; support shift select
-    (setq org-support-shift-select 1))
-#+end_src
-** org-tempo
-#+begin_src emacs-lisp
-  (with-eval-after-load 'org
-    ;; type <X + TAB to generate text blocks
+    (setq org-support-shift-select 1)
+
+    ;; type minor-symbol X TAB to generate text blocks
     (require 'org-tempo)
     ;; custom templates
-    (add-to-list 'org-structure-template-alist
-                 '("el" . "src emacs-lisp")
-                 '("hs" . "src haskell")))
+    ;; (add-to-list 'org-structure-template-alist
+    ;;              '(("el" . "src emacs-lisp")
+    ;;                ("hs" . "src haskell")
+    ;;                ("sc" . "src scheme")))
+    (mapcar
+     (lambda (org-template)
+       (add-to-list 'org-structure-template-alist org-template))
+     '(("el" . "src emacs-lisp")
+       ("hs" . "src haskell")
+       ("sc" . "src scheme"))))
 #+end_src
 ** org-bullets
 #+begin_src emacs-lisp
