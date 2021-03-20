@@ -4,10 +4,14 @@
 * start shell processes
 #+begin_src emacs-lisp
   (defun jotix/start-shell-processes ()
+    (setq jotix--set-keyboard-layout (if (string= (system-name) "ntbk-arch")
+                                         "setxkbmap latam"
+                                       "setxkbmap -layout us -variant altgr-intl"))
+  
     (setq procs
           '("lxpolkit"
             "xsetroot -cursor_name left_ptr &"
-            "setxkbmap -layout us -variant altgr-intl"
+            jotix--set-keyboard-layout
             "picom"))
 
     (mapcar (lambda (command) (start-process-shell-command command nil command)) procs))
