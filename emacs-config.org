@@ -256,7 +256,7 @@
   (display-time-mode t)
 
   ;; battery
-  (if (string= system-name "jtx.ntbk.bsd")
+  (if (string= system-name "ntbk-arch")
       (display-battery-mode))
 #+end_src
 * dired
