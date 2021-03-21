@@ -21,7 +21,7 @@ PACKAGES+=(ttf-ubuntu-font-family adobe-source-code-pro-fonts ttf-roboto ttf-rob
 PACKAGES+=(ttf-fira-code ttf-caladea ttf-carlito  ttf-dejavu ttf-liberation ttf-linux-libertine-g noto-fonts) # more fonts
 PACKAGES+=(adobe-source-code-pro-fonts adobe-source-sans-pro-fonts adobe-source-serif-pro-fonts) # more fonts
 PACKAGES+=(pass gnupg openssh) # security
-PACKAGES+=(exa bat) # gnu tools replacements
+PACKAGES+=(exa bat neovim) # gnu tools replacements
 
 read -r -d '' LOCALES_TO_INSTALL << EOM
 en_US.UTF-8 UTF-8
@@ -130,7 +130,6 @@ while [[ $CONFIRMATION != "y" ]]; do
     echo ""
     CONFIRMATION=$(read_y_or_n "proced with the installation?")
 done
-exit
 
 ################################################################################
 ### install new system 

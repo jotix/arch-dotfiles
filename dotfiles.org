@@ -163,7 +163,7 @@
   alias protontricks-flat='flatpak run --command=protontricks com.valvesoftware.Steam'
 
   ### git-prompt
-  . ~/workspace-git/arch-dotfiles/git-prompt.sh
+  . ~/workspace/arch-dotfiles/git-prompt.sh
   GIT_PS1_SHOWDIRTYSTATE=1
   GIT_PS1_SHOWSTASHSTATE=1
   GIT_PS1_SHOWUNTRACKEDFILES=1
@@ -184,7 +184,7 @@ gtk-font-name = "Ubuntu Condensed, 11"
 gtk-theme-name = "Adapta-Nokto"
 #+end_src
 ** gtk3
-#+begin_src conf :tangle ~/.config/gtk-3.0/settings.ini
+#+begin_src conf :tangle ~/.config/gtk-3.0/settings.ini :mkdirp yes
 [Settings]
 gtk-font-name=Ubuntu Condensed, 11
 gtk-theme-name=Adapta-Nokto

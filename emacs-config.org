@@ -154,10 +154,10 @@
 * auto-tangle configuration files
 #+begin_src emacs-lisp
 
-  ;; Automatically tangle any .org in ~/workspace-git/arch-dotfiles file when we save it
+  ;; Automatically tangle any .org in ~/workspace/arch-dotfiles file when we save it
   (defun jotix/org-babel-tangle-config ()
     (when (string-equal (file-name-directory (buffer-file-name))
-                        (expand-file-name "~/workspace-git/arch-dotfiles/"))
+                        (expand-file-name "~/workspace/arch-dotfiles/"))
       ;; Dynamic scoping to the rescue
       (let ((org-confirm-babel-evaluate nil))
         (org-babel-tangle))))
