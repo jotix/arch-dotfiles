@@ -121,8 +121,8 @@ while [[ $CONFIRMATION != "y" ]]; do
     ENABLE_CUPS=$(read_y_or_n "enable cups?")
     ENABLE_GDM=$(read_y_or_n "enable gdm?")
     clear
-    echo "Hostname: $HOSTNAME"
-    echo "User Name: $USERNAME"
+    echo "Hostname: $HOST_NAME"
+    echo "User Name: $USER_NAME"
     echo "Edit Mirrorlist: $EDIT_MIRRORLIST"
     echo "Enable Libvirt: $ENABLE_LIBVIRT"
     echo "Enable Cups: $ENABLE_CUPS"
