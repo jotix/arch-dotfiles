@@ -1,5 +1,5 @@
 #+title: Exwm configuration
-#+PROPERTY: header-args:emacs-lisp :tangle ~/.config/emacs/exwm-config.el :mkdirp yes
+#+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/exwm-config.el :mkdirp yes
 
 * start shell processes
 #+begin_src emacs-lisp

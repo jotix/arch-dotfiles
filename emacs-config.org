@@ -1,5 +1,5 @@
 #+title: Emacs configuration
-#+PROPERTY: header-args:emacs-lisp :tangle ~/.config/emacs/init.el :mkdirp yes
+#+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/init.el :mkdirp yes
 
 * note
 #+begin_src emacs-lisp
@@ -366,11 +366,11 @@
 #+begin_src emacs-lisp
   (defun jotix/config-visit ()
     (interactive)
-    (find-file "~/workspace-git/arch-dotfiles/emacs-config.org"))
+    (find-file "~/workspace/arch-dotfiles/emacs-config.org"))
 
   (defun jotix/dotfiles-visit ()
     (interactive)
-    (find-file "~/workspace-git/arch-dotfiles/dotfiles.org"))
+    (find-file "~/workspace/arch-dotfiles/dotfiles.org"))
 
   (global-set-key (kbd "C-c e") 'jotix/config-visit)
   (global-set-key (kbd "C-c E") 'jotix/dotfiles-visit)
@@ -402,7 +402,7 @@
       :init (eshell-git-prompt-use-theme 'git-radar)))
 #+end_src
 ** aliases
-#+begin_src shell :tangle ~/.config/emacs/eshell/alias :mkdirp yes
+#+begin_src shell :tangle ~/.emacs.d/eshell/alias :mkdirp yes
   ### NOTE: this file is generated from emacs-config.org. Please edit that file
   ### in Emacs and execute org-babel-tangle for generate it
 
