@@ -151,6 +151,12 @@
     :hook (exwm-init . dashboard-refresh-buffer)
     :config (dashboard-setup-startup-hook))
 #+end_src
+** enwc
+#+begin_src emacs-lisp
+  (use-package enwc
+    :custom
+    (enwc-default-backend 'nm))
+#+end_src
 * auto-tangle configuration files
 #+begin_src emacs-lisp
 
