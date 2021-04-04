@@ -154,6 +154,7 @@
 ** enwc
 #+begin_src emacs-lisp
   (use-package enwc
+    :defer nil
     :custom
     (enwc-default-backend 'nm))
 #+end_src
