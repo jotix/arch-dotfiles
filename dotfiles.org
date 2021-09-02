@@ -11,6 +11,22 @@
 #+begin_src conf :tangle ~/.gnupg/gpg-agent.conf :mkdirp yes
   allow-emacs-pinentry
 #+end_src
+** qutebrowser
+#+begin_src python :tangle ~/.config/qutebrowser/config.py :mkdirp yes
+  config.load_autoconfig(False)
+
+  # tab are windows
+  c.tabs.tabs_are_windows = True
+
+  # hide statusbar
+  #c.statusbar.show = "never"
+
+  # hide tab bar
+  c.tabs.show = "never"
+
+  # window title format
+  c.window.title_format = "qute{title_sep}{perc}{current_title}"
+#+end_src
 * docs
 *** pulseaudio split front/rear
 Splitting front/rear
