@@ -1,6 +1,8 @@
 #+title: XMobar configuration
 #+PROPERTY: header-args:haskell :tangle ~/.xmonad/xmobarrc :mkdirp yes
+#+STARTUP: overview
 
+* xmobar
 #+begin_src haskell 
   Config { 
 

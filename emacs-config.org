@@ -1,5 +1,6 @@
 #+title: Emacs configuration
 #+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/init.el :mkdirp yes
+#+STARTUP: overview
 
 * note
 #+begin_src emacs-lisp
@@ -99,7 +100,7 @@
 #+end_src.
 ** haskell mode
 #+begin_src emacs-lisp
-  ;;(use-package haskell-mode)
+  (use-package haskell-mode)
 #+end_src
 ** company - auto completion
 #+begin_src emacs-lisp
@@ -285,43 +286,44 @@
 * org
 ** basic config
 #+begin_src emacs-lisp
-  (use-package org
-    :hook (org-mode . (lambda () (org-indent-mode 1)))
-    :config
-    ;; mensaje para debug del init de org
-    (message "ORG loaded")
+    (use-package org
+      :hook (org-mode . (lambda () (org-indent-mode 1)))
+      :config
+      ;; mensaje para debug del init de org
+      (message "ORG loaded")
 
-    ;; editar codigo en la misma ventana
-    (setq org-src-window-setup 'current-window)
+      ;; editar codigo en la misma ventana
+      (setq org-src-window-setup 'current-window)
 
-    ;; org start with org-indent-mode active
-    (setq org-startup-indentation 1)
+      ;; org start with org-indent-mode active
+      (setq org-startup-indentation 1)
 
-    ;; the effect of TAB in a code block is as if it were
-    ;; issued in the language major mode buffer. 
-    (setq org-src-tab-acts-natively t)
+      ;; the effect of TAB in a code block is as if it were
+      ;; issued in the language major mode buffer. 
+      (setq org-src-tab-acts-natively t)
 
-    ;; This should be the number of spaces added to the indentation of the #+begin
-    ;; line in order to compute the indentation of the block content after
-    ;; editing it with ‘M-x org-edit-src-code’.
-    (setq org-edit-src-content-indentation 2)
+      ;; This should be the number of spaces added to the indentation of the #+begin
+      ;; line in order to compute the indentation of the block content after
+      ;; editing it with ‘M-x org-edit-src-code’.
+      (setq org-edit-src-content-indentation 2)
 
-    ;; support shift select
-    (setq org-support-shift-select 1)
+      ;; support shift select
+      (setq org-support-shift-select 1)
 
-    ;; type minor-symbol X TAB to generate text blocks
-    (require 'org-tempo)
-    ;; custom templates
-    ;; (add-to-list 'org-structure-template-alist
-    ;;              '(("el" . "src emacs-lisp")
-    ;;                ("hs" . "src haskell")
-    ;;                ("sc" . "src scheme")))
-    (mapcar
-     (lambda (org-template)
-       (add-to-list 'org-structure-template-alist org-template))
-     '(("el" . "src emacs-lisp")
-       ("hs" . "src haskell")
-       ("sc" . "src scheme"))))
+      ;; type minor-symbol X TAB to generate text blocks
+      (require 'org-tempo)
+      ;; custom templates
+      ;; (add-to-list 'org-structure-template-alist
+      ;;              '(("el" . "src emacs-lisp")
+      ;;                ("hs" . "src haskell")
+      ;;                ("sc" . "src scheme")))
+      (mapcar
+       (lambda (org-template)
+         (add-to-list 'org-structure-template-alist org-template))
+       '(("el" . "src emacs-lisp")
+         ("hs" . "src haskell")
+         ("sc" . "src scheme")
+         ("sh" . "src shell"))))
 #+end_src
 ** org-bullets
 #+begin_src emacs-lisp

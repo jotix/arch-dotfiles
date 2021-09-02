@@ -1,6 +1,7 @@
 #+title: XMonad configuration
 #+PROPERTY: header-args:haskell :tangle ~/.xmonad/xmonad.hs :mkdirp yes
- 
+#+STARTUP: overview
+
 Xmonad configuration file
 * header - imports
 #+begin_src haskell
