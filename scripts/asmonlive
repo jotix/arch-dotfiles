@@ -1,0 +1,1 @@
+streamlink -p mpv https://www.twitch.tv/asmongold 360p

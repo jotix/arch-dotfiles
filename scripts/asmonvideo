@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ $2 != "" ]]; then
+	OFFSET=" --hls-start-offset $2"
+fi
+
+streamlink -p mpv https://www.twitch.tv/videos/$1 360p $OFFSET
+
