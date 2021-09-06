@@ -1,0 +1,17 @@
+#!/bin/bash
+
+CHANNEL=$1
+
+if [[ "$1" == "asmon" ]]; then 
+	CHANNEL="asmongold"
+elif [[ $1 == "heikki" ]]; then
+	CHANNEL="heikki360es"
+fi
+
+if [[ $2 == "" ]]; then
+	QUALITY="360p"
+else
+	QUALITY=$2
+fi
+
+streamlink -p mpv https://www.twitch.tv/$CHANNEL $QUALITY $3

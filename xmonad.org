@@ -29,6 +29,8 @@ Xmonad configuration file
   import XMonad.Prompt.Window
 
   import Graphics.X11.ExtraTypes.XF86
+
+  import Network.HostName
 #+end_src
 * constants
 #+begin_src haskell
@@ -44,7 +46,7 @@ Xmonad configuration file
   -- A tagging example:
   -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
   myWorkspaces     = ["1",  "2",  "3",  "4",  "5",  "6",  "7",  "8"]
-  myWorkspacesKeys = [xK_q, xK_w, xK_e, xK_r, xK_t, xK_y, xK_u, xK_i]
+  myWorkspacesKeys = [xK_1, xK_2, xK_3, xK_4, xK_5, xK_6, xK_7, xK_8]
 
   -- Colors definitions
   colCyan1 = "#008080"
@@ -260,7 +262,14 @@ Xmonad configuration file
   -- per-workspace layout choices.
   --
   -- By default, do nothing.
-  myStartupHook = return ()
+  myStartupHook = do
+    hostname <- getHostName
+    setKeyboard hostname
+    --return ()
+
+  setKeyboard hostname =
+    | hostname == "jtx-arch" = spawn "setxkbmap latam"
+    | otherwise = return ()           
 
 #+end_src
 * status bar
