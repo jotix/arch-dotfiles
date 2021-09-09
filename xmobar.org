@@ -17,7 +17,7 @@
   -- layout
   , sepChar =  "%"   -- delineator between plugin names and straight text
   , alignSep = "}{"  -- separator between left-right alignment
-  , template = "%StdinReader% }{ %volume% | %cpu% | %memory% | %disku% | %dynnetwork% | %date% "
+  , template = "%StdinReader% | %cpu% | %memory% | %disku% | %dynnetwork% | %date% "
 
   -- general behavior
   , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -48,7 +48,7 @@
        --                     ] 36000
 
        -- volume
-       , Run Com "/bin/bash" [ "-c", "~/.scripts/volctl -v" ] "volume" 10
+       --, Run Com "/bin/bash" [ "-c", "~/.scripts/volctl -v" ] "volume" 10
 
        -- Disk Usage
        , Run DiskU         [ ( "/" , "root: <used>/<size>" ) ] [] 20

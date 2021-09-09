@@ -30,7 +30,10 @@ Xmonad configuration file
 
   import Graphics.X11.ExtraTypes.XF86
 
-  import Network.HostName
+  --import Network.HostName
+  --import Network.HostName
+  import System.IO.Unsafe
+  import System.Posix.Unistd -- for getting hostname
 #+end_src
 * constants
 #+begin_src haskell
@@ -41,7 +44,7 @@ Xmonad configuration file
   myBorderWidth       = 2         -- Width of the window border in pixels.
   myModMask           = mod4Mask  -- modMask lets you specify which modkey you want to use.
   myFloatSize           = W.RationalRect (1/4) (1/4) (1/2) (1/2)
-
+  
   -- The default number of workspaces (virtual screens) and their names.
   -- A tagging example:
   -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
@@ -154,7 +157,7 @@ Xmonad configuration file
       , confirmPrompt myXPromptConfig "exit" $ io (exitWith ExitSuccess))
 
       -- Restart xmonad
-      , ((modm .|. shiftMask, xK_c), spawn "xmonad --recompile && xmonad --restart")
+      , ((modm .|. shiftMask, xK_r), spawn "xmonad --recompile && xmonad --restart")
 
       -- Run xmessage with a summary of the default keybindings (useful for beginners)
       , ((modm, xK_slash), spawn ("echo '" ++ help ++ "' | xmessage -file -"))
@@ -263,14 +266,12 @@ Xmonad configuration file
   --
   -- By default, do nothing.
   myStartupHook = do
-    hostname <- getHostName
-    setKeyboard hostname
-    --return ()
-
-  setKeyboard hostname =
-    | hostname == "jtx-arch" = spawn "setxkbmap latam"
-    | otherwise = return ()           
-
+    spawn "setxkbmap latam"
+    spawn "nitrogen --restore"
+    spawn "stalonetray"
+    spawn "nm-applet"
+    spawn "volumeicon"
+    return ()
 #+end_src
 * status bar
 #+begin_src haskell
