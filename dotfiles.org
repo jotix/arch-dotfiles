@@ -1,4 +1,5 @@
 #+title: Jotix dotfiles
+#+STARTUP: overview
 
 * dotfiles
 ** gitconfig
@@ -26,6 +27,35 @@
 
   # window title format
   c.window.title_format = "qute{title_sep}{perc}{current_title}"
+#+end_src
+** stalonetray
+#+begin_src conf :tangle ~/.config/stalonetrayrc :mkdirp yes
+  background "#003030"
+  geometry 1x1+1346+0
+  grow_gravity SE
+  icon_gravity SE
+  icon_size 20 
+#+end_src
+** alacritty
+#+begin_src conf :tangle ~/.config/alacritty/alacritty.yml :mkdirp yes
+  font:
+    normal:
+      family: monospace
+      style: Regular
+
+    bold:
+      family: monospace
+      style: Bold
+
+    italic:
+      family: monospace
+      style: Italic
+
+    bold_italic:
+      family: monospace
+      style: Bold Italic
+
+    size: 8
 #+end_src
 * docs
 *** pulseaudio split front/rear
