@@ -1,6 +1,6 @@
-* NO tangle dotfiles
+* TODO NO tangle dotfiles
 ** sway
-#+begin_src conf 
+#+begin_src conf :tangle ~/.config/sway/config :mkdirp yes 
   # Default config for sway
   #
   # Copy this to ~/.config/sway/config and edit it to your liking.
@@ -217,7 +217,7 @@
 #+end_src
    
 ** spectrwm
-#+begin_src conf 
+#+begin_src conf :tangle ~/.config/spectrwm/spectrwm.conf :mkdirp yes 
   # PLEASE READ THE MAN PAGE BEFORE EDITING THIS FILE!
   # https://htmlpreview.github.io/?https://github.com/conformal/spectrwm/blob/master/spectrwm.html
   # NOTE: all rgb color values in this file are in hex! see XQueryColor for examples
@@ -466,7 +466,7 @@
 #+end_src
 
 ** nvim
-#+begin_src conf
+#+begin_src conf :tangle ~/.config/nvim/init.vim :mkdirp yes
   set nocompatible
   set number
   hi LineNr ctermfg=grey ctermbg=darkgrey
